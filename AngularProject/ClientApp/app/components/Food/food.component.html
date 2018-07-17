@@ -1,0 +1,266 @@
+﻿<div style="margin-top:51px; margin-left:-480px;">
+	<h1 style="color: royalblue !important;">Meny</h1>
+	<ul>
+		<li *ngFor="let pizza of apiValues">
+			<div id="pizzaDiv">
+				<div *ngIf="pizza.pizzaId == 1">
+					<img src="../../../../Images/pizza1.jpg" style="width:200px; height:150px;" />
+				</div>
+				<div *ngIf="pizza.pizzaId == 2">
+					<img src="../../../../Images/pizza2.jpg" style="width:200px; height:150px;" />
+				</div>
+				<div *ngIf="pizza.pizzaId == 3">
+					<img src="../../../../Images/pizza3.jpg" style="width:200px; height:150px;" />
+				</div>
+				<div *ngIf="pizza.pizzaId == 4">
+					<img src="../../../../Images/pizza4.jpg" style="width:200px; height:150px;" />
+				</div>
+				<div *ngIf="pizza.pizzaId == 5">
+					<img src="../../../../Images/pizza5.jpg" style="width:200px; height:150px;" />
+				</div>
+				<div *ngIf="pizza.pizzaId == 6">
+					<img src="../../../../Images/pizza6.jpg" style="width:200px; height:150px;" />
+				</div>
+				<div *ngIf="pizza.pizzaId == 7">
+					<img src="../../../../Images/pizza7.jpg" style="width:200px; height:150px;" />
+				</div>
+				<div *ngIf="pizza.pizzaId == 8">
+					<img src="../../../../Images/pizza8.jpg" style="width:200px; height:150px;" />
+				</div>
+				<div *ngIf="pizza.pizzaId == 9">
+					<img src="../../../../Images/pizza9.jpg" style="width:200px; height:150px;" />
+				</div>
+				<div *ngIf="pizza.pizzaId == 10">
+					<img src="../../../../Images/pizza10.jpg" style="width:200px; height:150px;" />
+				</div>
+				<div *ngIf="pizza.pizzaId == 11">
+					<img src="../../../../Images/pizza11.jpg" style="width:200px; height:150px;" />
+				</div>
+				<div *ngIf="pizza.pizzaId == 12">
+					<img src="../../../../Images/pizza12.jpg" style="width:200px; height:150px;" />
+				</div>
+				<div *ngIf="pizza.pizzaId == 13">
+					<img src="../../../../Images/pizza13.jpg" style="width:200px; height:150px;" />
+				</div>
+				<div *ngIf="pizza.pizzaId == 14">
+					<img src="../../../../Images/pizza14.jpg" style="width:200px; height:150px;" />
+				</div>
+				<div *ngIf="pizza.pizzaId == 15">
+					<img src="../../../../Images/kebabrulle.jpg" style="width:200px; height:150px;" />
+				</div>
+				<div *ngIf="pizza.pizzaId == 16">
+					<img src="../../../../Images/kycklingsallad.jpg" style="width:200px; height:150px;" />
+				</div>
+			</div>
+			<h4 *ngIf="pizza.categoryId == 1" style="color:white; background-color:black; margin-top:10px;">
+				{{pizza.pizzaId}}. <b>{{pizza.name }}</b> {{pizza.price}}:-
+				<br /> Pizza
+				<button style="background-color:black;border:none; float:right; margin-top:-5px" (click)="modal(pizza)" data-target="#myModal" data-toggle="modal">
+					<span class="glyphicon glyphicon-shopping-cart" style="color:antiquewhite; float:right;"></span>
+				</button>
+			</h4>
+			<h4 *ngIf="pizza.categoryId == 2" style="color:white; background-color:black; margin-top:10px;">
+				{{pizza.pizzaId}}. <b>{{pizza.name }}</b> {{pizza.price}}:-
+				<br /> Inbakad
+				<button style="background-color:black;border:none; float:right; margin-top:-5px" data-target="#myModal" (click)="modal(pizza)" data-toggle="modal">
+					<span class="glyphicon glyphicon-shopping-cart" style="color:antiquewhite; float:right;"></span>
+				</button>
+			</h4>
+			<h4 *ngIf="pizza.categoryId == 3" style="color:white; background-color:black; margin-top:10px;">
+				{{pizza.pizzaId}}. <b>{{pizza.name }}</b> {{pizza.price}}:-
+				<br /> Vegetarisk
+				<button style="background-color:black;border:none; float:right; margin-top:-5px" data-target="#myModal" (click)="modal(pizza)" data-toggle="modal">
+					<span class="glyphicon glyphicon-shopping-cart" style="color:antiquewhite; float:right;"></span>
+				</button>
+			</h4>
+			<h4 *ngIf="pizza.categoryId == 4" style="color:white; background-color:black; margin-top:10px;">
+				{{pizza.pizzaId}}. <b>{{pizza.name }}</b> {{pizza.price}}:-
+				<br /> Sallad
+				<button style="background-color:black;border:none; float:right; margin-top:-5px" data-target="#NotPizzaRollModal" (click)="modal(pizza)" data-toggle="modal">
+					<span class="glyphicon glyphicon-shopping-cart" style="color:antiquewhite; float:right;"></span>
+				</button>
+			</h4>
+			<h4 *ngIf="pizza.categoryId == 6" style="color:white; background-color:black; margin-top:10px;">
+				{{pizza.pizzaId}}. <b>{{pizza.name }}</b> {{pizza.price}}:-
+				<br /> Rulle
+				<button style="background-color:black;border:none; float:right; margin-top:-5px" data-target="#NotpizzaModal" (click)="modal(pizza)" data-toggle="modal">
+					<span class="glyphicon glyphicon-shopping-cart" style="color:antiquewhite; float:right;"></span>
+				</button>
+			</h4>
+			<h4 *ngIf="pizza.categoryId == 9" style="color:white; background-color:black; margin-top:10px;">
+				{{pizza.pizzaId}}. <b>{{pizza.name }}</b> {{pizza.price}}:-
+				<br /> Tillbehör
+				<button style="background-color:black;border:none; float:right; margin-top:-5px" (click)="modal(pizza)">
+					<span class="glyphicon glyphicon-shopping-cart" style="color:antiquewhite; float:right;"></span>
+				</button>
+			</h4>
+		</li>
+	</ul>
+
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="NotPizzaRollModal">
+	<div class="modal-dialog">
+		<div class="modal-content" style="border-color:gold;">
+
+			<!-- Modal Header -->
+			<div class="modal-header" style="background-color:gold">
+				<h4 class="modal-title" style="text-align:center">{{clickedValues.name}}</h4>
+				<button type="button" class="close" data-dismiss="modal" style="margin-top:-20px;">&times;</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div id="pizzaDiv">
+					<div *ngIf="clickedValues.pizzaId == 16">
+						<img src="../../../../Images/kycklingsallad.jpg" style="width:200px; height:150px;" />
+					</div>
+				</div>
+
+				<form #ToListForm (ngSubmit)="toListSalad(ToListForm.value)" style="float:left;">
+					<div class="form-group" style="margin-left:20px;width:300px;">
+						<h4>Pris: {{clickedValues.price}}</h4>
+
+					</div>
+					<div class="form-group" style="margin-left:20px;width:300px;">
+						<h2 style="margin-top:120px;">
+							Summa: {{clickedValues.price}} <button type="submit" *ngIf="user.personId != 2" style="background-color:white; border:none;"><span class="glyphicon glyphicon-shopping-cart" style="color:black; float:right;"></span> </button>
+						</h2>
+					</div>
+				</form>
+			</div>
+
+			<!-- Modal footer -->
+			<div class="modal-footer" style="margin-top:250px; background-color:gold;">
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="NotpizzaModal">
+	<div class="modal-dialog">
+		<div class="modal-content" style="border-color:gold;">
+
+			<!-- Modal Header -->
+			<div class="modal-header" style="background-color:gold">
+				<h4 class="modal-title" style="text-align:center">{{clickedValues.name}}</h4>
+				<button type="button" class="close" data-dismiss="modal" style="margin-top:-20px;">&times;</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div id="pizzaDiv">
+					<div *ngIf="clickedValues.pizzaId == 15">
+						<img src="../../../../Images/kebabrulle.jpg" style="width:200px; height:150px;" />
+					</div>
+				</div>
+
+				<form #ToListForm (ngSubmit)="toListRoll(ToListForm.value)" style="float:left;">
+					<div class="form-group" style="margin-left:20px;width:300px;">
+						<h4>Pris: {{clickedValues.price}}</h4>
+
+					</div>
+					<div class="form-group" style="margin-left:20px;width:300px;">
+						<h2 style="margin-top:120px;">
+							Summa: {{clickedValues.price}} <button type="submit" *ngIf="user.personId != 2" style="background-color:white; border:none;"><span class="glyphicon glyphicon-shopping-cart" style="color:black; float:right;"></span> </button>
+						</h2>
+					</div>
+				</form>
+			</div>
+
+			<!-- Modal footer -->
+			<div class="modal-footer" style="margin-top:250px; background-color:gold;">
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+	<div class="modal-dialog">
+		<div class="modal-content" style="border-color:gold;">
+
+			<!-- Modal Header -->
+			<div class="modal-header" style="background-color:gold">
+				<h4 class="modal-title" style="text-align:center">{{clickedValues.name}}</h4>
+				<button type="button" class="close" data-dismiss="modal" style="margin-top:-20px;">&times;</button>
+			</div>
+
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div id="pizzaDiv">
+					<div *ngIf="clickedValues.pizzaId == 1">
+						<img src="../../../../Images/pizza1.jpg" style="width:200px; height:150px;" />
+					</div>
+					<div *ngIf="clickedValues.pizzaId == 2">
+						<img src="../../../../Images/pizza2.jpg" style="width:200px; height:150px;" />
+					</div>
+					<div *ngIf="clickedValues.pizzaId == 3">
+						<img src="../../../../Images/pizza3.jpg" style="width:200px; height:150px;" />
+					</div>
+					<div *ngIf="clickedValues.pizzaId == 4">
+						<img src="../../../../Images/pizza4.jpg" style="width:200px; height:150px;" />
+					</div>
+					<div *ngIf="clickedValues.pizzaId == 5">
+						<img src="../../../../Images/pizza5.jpg" style="width:200px; height:150px;" />
+					</div>
+					<div *ngIf="clickedValues.pizzaId == 6">
+						<img src="../../../../Images/pizza6.jpg" style="width:200px; height:150px;" />
+					</div>
+					<div *ngIf="clickedValues.pizzaId == 7">
+						<img src="../../../../Images/pizza7.jpg" style="width:200px; height:150px;" />
+					</div>
+					<div *ngIf="clickedValues.pizzaId == 8">
+						<img src="../../../../Images/pizza8.jpg" style="width:200px; height:150px;" />
+					</div>
+					<div *ngIf="clickedValues.pizzaId == 9">
+						<img src="../../../../Images/pizza9.jpg" style="width:200px; height:150px;" />
+					</div>
+					<div *ngIf="clickedValues.pizzaId == 10">
+						<img src="../../../../Images/pizza10.jpg" style="width:200px; height:150px;" />
+					</div>
+					<div *ngIf="clickedValues.pizzaId == 11">
+						<img src="../../../../Images/pizza11.jpg" style="width:200px; height:150px;" />
+					</div>
+					<div *ngIf="clickedValues.pizzaId == 12">
+						<img src="../../../../Images/pizza12.jpg" style="width:200px; height:150px;" />
+					</div>
+					<div *ngIf="clickedValues.pizzaId == 13">
+						<img src="../../../../Images/pizza13.jpg" style="width:200px; height:150px;" />
+					</div>
+					<div *ngIf="clickedValues.pizzaId == 14">
+						<img src="../../../../Images/pizza14.jpg" style="width:200px; height:150px;" />
+					</div>
+				</div>
+
+				<form #ToListForm (ngSubmit)="toList(ToListForm.value)" style="float:left;">
+					<div class="form-group" style="margin-left:20px;width:300px;">
+						<label for="nameOfId">Alternativ:</label>
+						<input type="hidden" id="valuable" value="{{clickedValues.price}}" />
+						<select #selecting [(ngModel)]="food" (change)="countMoney(selecting.value)" class="form-control" id="food" required [ngModelOptions]="{standalone: true}" >
+							<option *ngFor="let foodselect of list" name="foodselect" [value]="foodselect.categoryId">{{foodselect.name}}</option>
+						</select>
+					</div>
+					<div class="form-group" style="margin-left:20px;width:300px;">
+						<h2 style="margin-top:120px;">
+							Summa: {{money}} <button type="submit" *ngIf="user.personId != 2" style="background-color:white; border:none;"><span class="glyphicon glyphicon-shopping-cart" style="color:black; float:right;"></span> </button>
+						</h2>
+					</div>
+				</form>
+			</div>
+
+			<!-- Modal footer -->
+			<div class="modal-footer" style="margin-top:250px; background-color:gold;">
+				<!--<button type="button" class="btn btn-danger" data-dismiss="modal" style="float:left;">Close</button>-->
+			</div>
+
+		</div>
+	</div>
+</div>
+
+<script src="../../api.js" defer></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>

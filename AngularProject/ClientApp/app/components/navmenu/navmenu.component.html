@@ -1,0 +1,104 @@
+
+<script src="../../api.js"></script>
+<meta meta charset=utf-8>
+<div class='main-nav'>
+	<div class='navbar navbar-inverse'>
+
+		<div class='navbar-header'>
+			<button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
+				<span class='sr-only'>Toggle navigation</span>
+				<span class='icon-bar'></span>
+				<span class='icon-bar'></span>
+				<span class='icon-bar'></span>
+			</button>
+			<a class='navbar-brand' [routerLink]="['/home']">Sommar projekt</a>
+		</div>
+		<div class='clearfix'></div>
+
+		<nav class="navbar navbar-inverse navbar-fixed-top">
+			<div class="container">
+				<div class="navbar-collapse collapse">
+					<ul class='nav navbar-nav'>
+						<li [routerLinkActive]="['link-active']" style="float:left;">
+							<a [routerLink]="['/home']">
+								<span class='glyphicon glyphicon-home' style="color:lightpink;"></span> Hem
+							</a>
+						</li>
+						<!--<li [routerLinkActive]="['link-active']">
+							<a [routerLink]="['/blog']">
+								<span class='glyphicon glyphicon-th-list' style="color:lightgreen;"></span> Omdömen
+							</a>
+						</li>
+						<li [routerLinkActive]="['link-active']">
+							<a [routerLink]="['/competition']">
+								<span class='glyphicon glyphicon-gift' style="color:deepskyblue;"></span> Tävling
+							</a>
+						</li>
+
+						<li>
+							<a [routerLink]="['/food']"> <span class="glyphicon glyphicon-apple" style="color:yellow;"></span>Meny </a>
+						</li>-->
+						<li *ngIf="user.personId == 1">
+							<a [routerLink]="['/create']"> Lägg till pizzor </a>
+						</li>
+						<li *ngIf="user.personId != 2">
+							<div class="dropdown" style="color:gray;">
+								<span class="glyphicon glyphicon-shopping-cart" style="color:antiquewhite; margin-top:15px;">
+								</span><!--[routerLink]="['/cart']"-->
+								Varukorg
+								<div class="numberCircle" *ngIf="count != 0">
+									<h6 style="margin-top:-6px; margin-left:-3px;">{{count}}</h6>
+								</div>
+								<div>
+									<ul class="dropdown-content">
+										<li style="margin-left:-10px; max-height:600px; overflow-y:auto;overflow-x:hidden;" *ngFor="let items of list">
+											<span class="glyphicon glyphicon-remove" style="color:black; float:right; margin-right:5px; margin-top:5px;" (click)="removing(items.pizzaId, items.categoryId)" title="Ta bort">
+											</span>
+											<h6 *ngIf="items.categoryId == 7">
+												{{items.name}} - {{items.price}}kr
+											</h6>
+											<h6 *ngIf="items.categoryId == 8" title="Familjepizza">
+												FP: {{items.name}} - {{items.price}}kr
+											</h6>
+
+											<h6 *ngIf="items.categoryId == 11">
+												Glutenfri: {{items.name}} - {{items.price}}kr
+											</h6>
+											<h6 *ngIf="items.categoryId == 12" title="Familjepizza">
+												Glutenfri FP: {{items.name}} - {{items.price}}kr
+											</h6>
+										</li>
+										<li><a [routerLink]="['/cart']" *ngIf="count != 0" style="text-align:center; width:92px; height:30px;" class="btn btn-primary"><h5 style="margin-top:-5px;">Till kassan</h5></a></li>
+									</ul>
+								</div>
+							</div>
+						</li>
+						<li *ngIf="user.personId != 2 && user.personId != 0" style="margin-left:500px; color:gray;">
+							<div class="dropdown" style="color:gray;">
+								<span class="glyphicon glyphicon-picture" style="color:antiquewhite; margin-top:15px;">
+								</span>
+								Mina sidor
+								<div>
+									<ul class="dropdown-content">
+										<li style="margin-left:-10px; max-height:600px; overflow-y:auto;overflow-x:hidden;">
+											<a [routerLink]="['/user']">Profil</a>
+										</li>
+										<li>
+											<a (click)="logout()">Logga ut</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</li>
+						<li *ngIf="user.personId == 2">
+							<a [routerLink]="['/user']"> Logga in </a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+	</div>
+</div>
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">

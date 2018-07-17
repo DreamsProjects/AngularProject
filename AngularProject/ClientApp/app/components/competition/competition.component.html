@@ -1,0 +1,55 @@
+﻿
+<div id="back">
+	<div id="head" class="container">
+		<h1 style="margin-left:-350px;"><strong>*SHOTGUN*</strong></h1><h3 style="float:right; margin-top:-40px;"><span style="margin-right:400px" class="glyphicon glyphicon-question-sign"
+				  title="För att skjuta behöver du ha minst en kula! 
+Ladda mot ladda: Båda spelarna får ett skott. 
+Ladda mot blocka: Spelaren som laddar får ett skott. 
+Blocka mot blocka: Ingenting händer.
+Skjuta mot blocka: Spelaren som sköt förlorar ett skott. 
+Skjuta mot skjuta: Båda spelarna förlorar ett skott. 
+Skjuta mot ladda: Spelaren som skjuter vinner.
+Shotgun = Du/Datorn vinner oavsett vad - För shotgun behöver du minst tre kulor.
+**Du ska få så många skott som möjligt innan spelet är avslutat för att kunna vinna ett presentkort**"></span>
+		</h3></div>
+
+		<form>
+			<div class="container">
+				<button type="button" class="btn-lg" id="Load" (click)="LoadButton()">Ladda</button>
+				<button type="button" class="btn-lg" id="Block" (click)="BlockButton()">Blockera</button>
+				<button type="button" class="btn-lg" id="Shot" (click)="ShotButton()">Skjut</button>
+				<button type="button" class="btn-lg" id="Shotgun" (click)="GunButton()">Shotgun</button>
+				<br/>
+				<button *ngIf="edit == true && user.personId != 2 && number == 1" type="button" class="btn-lg" id="Save" (click)="SaveToDb()">Spara</button>
+				<button *ngIf="edit == true" type="button" class="btn-lg" id="Restarts" (click)="RestartGame()">Starta om</button>
+			</div>
+		</form>
+
+		<div id="containers" class="container" style="margin-left:520px;">
+			<table>
+				<tr>
+					<td>Spelare</td>
+					<td></td>
+					<td>Dator</td>
+				</tr>
+				<tr>
+					<td><br />Antal kulor: <div id="Play"> {{bullet}} </div></td>
+					<td></td>
+					<td><br /> Antal kulor: <div id="Comp"> {{compBullet}} </div></td>
+				</tr>
+			</table>
+		</div>
+
+		<div id="containers" class="container" style="margin-left:520px;">
+			<table>
+				<tr>
+					<td>
+						Händelse historik: <br />
+						<div id="print"> </div>
+					</td>
+				</tr>
+			</table><br />
+		</div>
+	</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>

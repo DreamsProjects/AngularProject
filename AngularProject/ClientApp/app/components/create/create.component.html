@@ -1,0 +1,230 @@
+﻿<h3 style="color:#003366; text-align:center">Admin sida för hantering av mat</h3>
+
+<div style="float:left; width:310px; margin-left:50px;">
+	<div class="panel panel-warning" style="margin-top:30px; width:310px; max-height:455px; overflow-x:hidden; overflow-y:auto;">
+		<div class="panel-heading">
+			<h4 style="text-align:center;">Tillagd mat:</h4>
+			<span style=" float:left;margin-top:-40px;" class="glyphicon glyphicon-plus" data-target="#myFoodModal" data-toggle="modal"></span>
+		</div>
+		<br />
+		<div class="form-group" style="margin-left:20px;width:90%;">
+			<ul *ngFor="let pizza of pizzas" style="margin-left:-50px;">
+				<li>
+					{{pizza.pizzaId}}.{{pizza.name}}, pris: {{pizza.price}} :-
+					<span class="glyphicon glyphicon-trash" style="float:right;" (click)="removing(pizza)" title="Radera"></span>
+					<span class="glyphicon glyphicon-edit" style="float:right; margin-right:10px;" title="Ändra" (click)="giveValue(pizza.pizzaId)" data-toggle="modal" data-target="#editModal"></span>
+					<hr />
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div style="float:left; width:310px; margin-left:50px;">
+
+	<div class="panel panel-warning" style=" margin-top:30px; width:310px; max-height:455px; overflow-x:hidden; overflow-y:auto;">
+		<div class="panel-heading">
+			<h4 style="text-align:center;">Tillagda ingredienser:</h4>
+			<span style=" float:left;margin-top:-40px;" class="glyphicon glyphicon-plus" data-target="#myIngredientModal" data-toggle="modal"></span>
+		</div>
+		<br />
+		<div class="form-group" style="margin-left:20px;width:90%;">
+			<ul *ngFor="let product of products">
+				<li>
+					<h5 style="margin-left:-50px;">{{product.ingredientId}}. {{product.name}}</h5><h5 style="float:right; margin-top:-25px;">Tilläggspris {{product.price }}:-</h5>
+					<hr />
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div style="float:left; width:310px; margin-left:50px;">
+	<div class="panel panel-warning" style=" margin-top:30px; width:310px; max-height:455px; overflow-x:hidden; overflow-y:auto;">
+		<div class="panel-heading">
+			<h4 style="text-align:center;">Varor på pizzor:</h4>
+			<span style=" float:left;margin-top:-40px;" class="glyphicon glyphicon-plus" data-target="#myProductModal" data-toggle="modal"></span>
+		</div>
+		<br />
+		<div class="form-group" style="margin-left:20px;width:90%;">
+			<ul *ngFor="let ingredient of ingredients">
+				<li style="margin-left:-50px;">
+					{{ingredient.pizzaName}} har {{ingredient.ingredientName}}.
+				</li>
+			</ul>
+		</div>
+	</div>
+
+</div>
+
+
+<!-- The Modal -->
+<div class="modal" id="editModal">
+	<div class="modal-dialog">
+		<div class="modal-content" style="border-color:gold; width:350px; max-height:600px; overflow-y:auto; overflow-x:hidden ">
+			<!-- Modal Header -->
+			<div class="modal-header" style="background-color:gold">
+				<h4 class="modal-title" style="text-align:center">Ändra pizza information!</h4>
+				<button type="button" class="close" data-dismiss="modal" style="margin-top:-20px;">&times;</button>
+			</div>
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="form-group" style="margin-left:10px;">
+					<form #updateForm="ngForm" (ngSubmit)="update(updateForm)">
+						<div class="form-group" style="margin-left:20px;width:150px;">
+							<label for="pizzaName">Namn:</label>
+							<input required type="text" class="form-control" placeholder="Nytt namn på maten..."
+								   id="pizzaName" name="pizzaName" [(ngModel)]="pizzaName" />
+						</div>
+						<div class="form-group" style="width:150px; margin-left:20px;">
+							<label for="categorys">Kategorin för maten:</label>
+							<select #selecting3 [(ngModel)]="categoryId" (change)="getOtherValue(selecting3.value)" class="form-control" id="categorys" required [ngModelOptions]="{standalone: true}">
+								<option *ngFor="let foodselect of food" [value]="foodselect.categoryId">{{foodselect.name}}</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="prices" style="float:left; margin-top:5px; margin-left:20px;">Pris:</label>
+							<input required type="text" class="form-control" style="float:left; width:50px; margin-left:10px;"
+								   id="prices" name="prices" [(ngModel)]="prices" />
+						</div>
+						<button type="submit" style="margin-right:10px;float:right;" class="btn btn-warning">Ändra</button>
+					</form>
+				</div>
+				<br />
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer" style="background-color:gold;">
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="myFoodModal">
+	<div class="modal-dialog">
+		<div class="modal-content" style="border-color:gold; width:350px; max-height:600px; overflow-y:auto; overflow-x:hidden ">
+			<!-- Modal Header -->
+			<div class="modal-header" style="background-color:gold">
+				<h4 class="modal-title" style="text-align:center">Lägg till pizza!</h4>
+				<button type="button" class="close" data-dismiss="modal" style="margin-top:-20px;">&times;</button>
+			</div>
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="form-group" style="margin-left:10px;">
+					<form #pizzaForm="ngForm" (ngSubmit)="createPizza(pizzaForm)">
+
+						<div class="form-group" style="margin-left:20px;width:90%;">
+							<label for="name">Namn:</label>
+							<input required type="text" class="form-control" placeholder="Namn på pizzan..."
+								   id="name" name="name" [(ngModel)]="name" />
+						</div>
+						<div class="form-group" style="width:280px; margin-left:20px;">
+							<label for="category">Kategori:</label>
+							<select #select [(ngModel)]="category" (change)="getValue(select.value)" class="form-control" id="category" required [ngModelOptions]="{standalone: true}">
+								<option *ngFor="let foodselect of food" [value]="foodselect.categoryId">{{foodselect.name}}</option>
+							</select>
+						</div>
+						<div class="form-group">
+							<label for="prices" style="float:left; margin-top:5px; margin-left:25px;">Pris:</label>
+							<input required type="text" class="form-control" style="float:left; width:85px; margin-left:10px;" placeholder="Kostnad..."
+								   id="prices" name="prices" [(ngModel)]="prices" />
+						</div>
+						<button type="submit" style="margin-right:10px;float:right;" class="btn btn-primary">Lägg till</button>
+					</form>
+				</div>
+				<br />
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer" style="background-color:gold;">
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- The Modal -->
+<div class="modal" id="myProductModal">
+	<div class="modal-dialog">
+		<div class="modal-content" style="border-color:gold; width:350px; max-height:600px; overflow-y:auto; overflow-x:hidden ">
+			<!-- Modal Header -->
+			<div class="modal-header" style="background-color:gold">
+				<h4 class="modal-title" style="text-align:center">Lägg till varor på maträtten!</h4>
+				<button type="button" class="close" data-dismiss="modal" style="margin-top:-20px;">&times;</button>
+			</div>
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="form-group" style="margin-left:10px;">
+					<form #createPizzaForm="ngForm" (ngSubmit)="Pizza(createPizzaForm)">
+						<div class="form-group" style="width:90%;">
+							<label for="nameOfId">Ange pizza:</label>
+							<select #selecting [(ngModel)]="food" (change)="getChoosenIdPizza(selecting.value)" class="form-control" id="food" required [ngModelOptions]="{standalone: true}">
+								<option *ngFor="let foodselect of pizzas" name="foodselect" [value]="foodselect.pizzaId">{{foodselect.name}}</option>
+							</select>
+						</div>
+						<div class="form-group" style="width:90%;">
+							<label for="nameOfId">Ange Ingrediens:</label>
+							<select #selecting2 [(ngModel)]="product" (change)="getChoosenIdIngr(selecting2.value)" class="form-control" id="product" required [ngModelOptions]="{standalone: true}">
+								<option *ngFor="let products of products" name="products" [value]="products.ingredientId">{{products.name}}</option>
+							</select>
+						</div>
+						<button type="submit" class="btn btn-primary">Lägg till</button>
+					</form>
+				</div>
+
+				<br />
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer" style="background-color:gold;">
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<!-- The Modal -->
+<div class="modal" id="myIngredientModal">
+	<div class="modal-dialog">
+		<div class="modal-content" style="border-color:gold; width:350px; max-height:600px; overflow-y:auto; overflow-x:hidden ">
+			<!-- Modal Header -->
+			<div class="modal-header" style="background-color:gold">
+				<h4 class="modal-title" style="text-align:center">Lägg till ingrediens!</h4>
+				<button type="button" class="close" data-dismiss="modal" style="margin-top:-20px;">&times;</button>
+			</div>
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="form-group" style="margin-left:10px;">
+					<form #productForm="ngForm" (ngSubmit)="create(productForm)">
+
+						<div class="form-group" style="margin-left:20px;width:90%;">
+							<label for="nameIng">Namn:</label>
+							<input required type="text" class="form-control" placeholder="Namn på varan..."
+								   id="nameIng" name="nameIng" [(ngModel)]="nameIng" />
+						</div>
+
+						<div class="form-group" style="margin-left:20px;width:90%;">
+							<label for="price">Pris:</label>
+							<input required type="text" class="form-control" placeholder="Pris på varan..."
+								   id="price" name="price" [(ngModel)]="price" />
+						</div>
+						<button type="submit" style="margin-left:20px;" class="btn btn-primary">Lägg till</button>
+					</form>
+
+				</div>
+
+				<br />
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer" style="background-color:gold;">
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<style>
+	ul, li {
+		list-style: none;
+	}
+</style>

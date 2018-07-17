@@ -1,0 +1,29 @@
+﻿
+ul, li {
+	list-style-type: none;
+	float:left;
+}
+
+li {
+	list-style-type: none;
+	float: left;
+	margin-left: 55px;
+	margin-top: 30px;
+	border:solid;
+	border-color:black;
+	height:190px;
+}
+
+#pizzaDiv {
+float:left;
+}
+
+h1 {
+text-align:center;
+background-color:gold;
+}
+
+ul {
+	background-image: url('../../../../images/pizza0.jpg');
+	margin-top:-10px;
+}

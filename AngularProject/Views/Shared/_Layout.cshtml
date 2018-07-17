@@ -1,0 +1,21 @@
+﻿@using Microsoft.AspNetCore.Http
+@using System.Security.Claims
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta meta charset=utf-8>
+	<title>Emmas project</title>
+	<base href="~/" />
+	<link rel="stylesheet" href="~/dist/vendor.css" asp-append-version="true" />
+</head>
+<body>
+	<meta charset="utf-8" />
+	<meta meta charset=utf-8>
+	@RenderBody()
+
+	@RenderSection("scripts", required: false)
+</body>
+</html>

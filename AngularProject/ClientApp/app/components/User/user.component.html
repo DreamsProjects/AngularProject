@@ -1,0 +1,351 @@
+﻿<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<div style="margin-top:100px; margin-left:-100px;">
+	<div *ngIf="user.personId!= 2">
+		<!--Om inloggad-->
+		<div *ngIf="user.personId != 1">
+			<form #logutForm="ngForm" (ngSubmit)="logout(logutForm)" style="float:right; margin-top:-60px;">
+				<button type="submit" style="margin-right:20px; margin-top:80px;" class="btn btn-danger">Logga ut</button>
+			</form>
+
+			<h4 style="margin-left:10px;">Välkommen {{user.firstName}} {{user.lastName}}! <span class="glyphicon glyphicon-user" data-target="#changeInfoModal" data-toggle="modal"></span></h4>
+
+			<h4 style="margin-left:40px;">Dina tidigare ordrar:</h4>
+			<ul>
+				<li *ngFor="let value of userOrders">
+					<h4>Order nummer: {{value.orderId}} <span class="glyphicon glyphicon-list-alt" data-target="#myModal" data-toggle="modal" style="height:20px;" title="Mer info" (click)="giveInfo(value.orderId, 1)"></span></h4>
+				</li>
+			</ul>
+			<hr />
+		</div>
+
+		<!--Admins personliga sida för att redigera olika uppgifter-->
+		<div *ngIf="user.personId == 1" style="width:700px;">
+			<div style="border:solid; border-color:gold;">
+				<div class="modal-header" style="background-color:gold">
+					<h4>Du är inloggad som {{user.firstName}}!</h4>
+					<form #logutForm="ngForm" (ngSubmit)="logout(logutForm)" style="float:right; margin-top:-60px;">
+						<button type="submit" style="margin-right:20px; margin-top:10px;" class="btn btn-danger">Logga ut</button>
+					</form>
+				</div>
+				<div style="margin-left:20px;">
+					<h4>Ej levererade ordrar idag:</h4>
+					<ul>
+						<li *ngFor="let value of notDeliveredToday">
+							<h4>Order nummer: {{value.orderId}} <span class="glyphicon glyphicon-list-alt" data-target="#myModal" data-toggle="modal" style="height:20px;" title="Mer info" (click)="giveInfo(value.orderId, 0)"></span></h4>
+						</li>
+					</ul>
+					<br />
+					<hr style="border-color:red;" />
+					<h4>Levererade ordrar idag:</h4>
+					<ul>
+						<li *ngFor="let value of deliveredToday">
+							<h4>Order nummer: {{value.orderId}} <span class="glyphicon glyphicon-list-alt" data-target="#myModal" data-toggle="modal" style="height:20px;" title="Mer info" (click)="giveInfo(value,1)"></span></h4>
+						</li>
+					</ul>
+					<br />
+					<hr style="border-color:blue;" />
+					<h4 style="float:left; margin-top:-10px;">
+						Sålt idag för:
+						{{moneyToday}}
+						<br />
+					</h4>
+					<h4 style=" float:right;margin-top:-10px;">
+						Totalt under detta året:
+						{{moneyYear}}
+						<br />
+					</h4>
+					<br />
+				</div>
+			</div>
+			<div class="modal-footer" style="background-color:gold; margin-top:-4px;">
+			</div>
+		</div>
+	</div>
+	<div *ngIf="user.personId == 2">
+		<!--Om ej inloggad-->
+		<form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+			<div class="panel panel-primary" style="width:25%; margin-top:50px; margin-left:50px; height:285px;">
+				<div class="panel-heading">
+					<h4 style="text-align:center;">Logga in</h4>
+				</div>
+				<br />
+				<div class="form-group" style="margin-left:20px;width:90%;">
+					<label for="email">Användarnamn:</label>
+					<input required type="text" class="form-control" placeholder="Epost..."
+						   id="email" name="Email" [(ngModel)]="email" />
+				</div>
+				<div class="form-group" style="margin-left:20px;width:90%;">
+					<label for="password">Lösenord: </label>
+					<input required type="password" class="form-control" placeholder="Lösenord..."
+						   id="password" name="Pass" [(ngModel)]="password" />
+				</div>
+				<button type="submit" style="margin-left:20px;" class="btn btn-primary">Logga in</button>
+			</div>
+		</form>
+		<a data-target="#myUserModal" data-toggle="modal"><h4>Skapa ett konto här</h4></a>
+	</div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="changeInfoModal">
+	<div class="modal-dialog">
+		<div class="modal-content" style="border-color:gold; width:350px; max-height:750px; overflow-y:auto; overflow-x:hidden ">
+			<!-- Modal Header -->
+			<div class="modal-header" style="background-color:gold">
+				<h4 class="modal-title" style="text-align:center">Ändra information!</h4>
+				<button type="button" class="close" data-dismiss="modal" style="margin-top:-20px;">&times;</button>
+			</div>
+			<!-- Modal body -->
+			<div class="modal-body">
+				<form #infoForm="ngForm" (ngSubmit)="change(infoForm)">
+					<div class="form-group" style="margin-left:20px;">
+						<label for="Names">Förnamn: </label>
+						<h5><span class="glyphicon glyphicon-question-sign" style="float:right; color:lightblue;" title="Minst 3 bokstäver"></span></h5>
+						<input minlength="3" maxlength="255" style="width:250px;" required type="text" name="Names" id="Names" class="form-control"
+							   placeholder="Förnamn..." [(ngModel)]="Names" pattern="[a-zA-z][a-zA-Z]+" ngModel #name="ngModel" />
+						<div *ngIf="name.touched">
+							<div *ngIf="name.errors?.required">
+								Förnamn är obligatoriskt
+							</div>
+						</div>
+					</div>
+					<div class="form-group" style="margin-left:20px;">
+						<label for="LastName">Efternamn: </label>
+						<h5><span class="glyphicon glyphicon-question-sign" style="float:right; color:lightblue;" title="Minst 2 bokstäver"></span></h5>
+						<input minlenght="2" maxlength="255" style="width:250px;" required type="text" name="LastNames" id="LastNames" class="form-control"
+							   placeholder="Efternamn..." [(ngModel)]="LastNames" pattern="[a-zA-z][a-zA-Z]+" ngModel #lastUser="ngModel" />
+						<div *ngIf="lastUser.touched">
+							<div *ngIf="lastUser.errors?.required">
+								Efternamn är obligatoriskt
+							</div>
+						</div>
+					</div>
+					<div class="form-group" style="margin-left:20px;">
+						<label for="Email">Emailadress: </label>
+						<h5><span class="glyphicon glyphicon-question-sign" style="float:right; color:lightblue;" title="Emailadress@Domän.se"></span></h5>
+						<input minlength="3" maxlength="255" style="width:250px;" required type="text" name="Emails" id="Emails" class="form-control"
+							   placeholder="Email..." [(ngModel)]="Emails" ngModel #emailAs="ngModel" />
+						<div *ngIf="emailAs.touched">
+							<div *ngIf="emailAs.errors?.required">
+								Emailadressen är obligatoriskt
+							</div>
+							<!--<div *ngIf="emailAs.errors?.pattern"> pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
+								Emailadressen är inte korrekt
+							</div>-->
+						</div>
+					</div>
+					<div class="form-group" style="margin-left:20px;">
+						<label for="Phone">Telefonnummer: </label>
+						<h5><span class="glyphicon glyphicon-question-sign" style="float:right; color:lightblue;" title="Minst sju siffror"></span></h5>
+						<input minlength="7" maxlength="255" style="width:250px;" required type="text" name="Phones" id="Phones" class="form-control"
+							   placeholder="Tex 082121121..." [(ngModel)]="Phones" pattern="[0-9]*" ngModel #phones="ngModel" />
+						<div *ngIf="phones.touched">
+							<div *ngIf="phones.errors?.required">
+								Telefonnummer är obligatoriskt
+							</div>
+							<div *ngIf="phones.errors?.pattern">
+								Ta bort bindestreck och/eller mellanslag
+							</div>
+						</div>
+					</div>
+					<div class="form-group" style="margin-left:20px;">
+						<label for="Address">Adress: </label>
+						<h5><span class="glyphicon glyphicon-question-sign" style="float:right; color:lightblue;" title="Adressen för leveransen"></span></h5>
+						<input minlength="5" maxlength="255" style="width:250px;" required type="text" name="Addresss" id="Addresss" class="form-control"
+							   placeholder="Tex: Högvägen 13, Tyresö" [(ngModel)]="Addresss" ngModel #Addresses="ngModel" />
+						<div *ngIf="Addresses.touched">
+							<div *ngIf="Addresses.errors?.required">
+								Adressen är obligatoriskt
+							</div>
+						</div>
+					</div>
+					<div class="form-group" style="margin-left:20px;">
+						<label for="Password">Lösenord: </label>
+						<h5><span class="glyphicon glyphicon-question-sign" style="float:right; color:lightblue;" title="Måste innehålla minst två siffror och åtta tecken"></span></h5>
+						<input minlength="8" style="width:250px;" required type="password" name="Passwords" id="Passwords" class="form-control"
+							   placeholder="Lösenord..." [(ngModel)]="Passwords" Pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" ngModel #pass="ngModel" />
+
+						<div *ngIf="pass.touched">
+							<div *ngIf="pass.errors?.required">
+								Lösenord är obligatoriskt
+							</div>
+							<div *ngIf="pass.errors?.pattern">
+								Lösenordet ska ha minst åtta tecken och två siffror
+							</div>
+						</div>
+					</div>
+					<button class="btn btn-primary" [disabled]="infoForm.invalid" style="margin-left:100px;">Ändra</button>
+				</form>
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer" style="background-color:gold;">
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="myUserModal">
+	<div class="modal-dialog">
+		<div class="modal-content" style="border-color:gold; width:350px;">
+			<!-- Modal Header -->
+			<div class="modal-header" style="background-color:gold">
+				<h4 class="modal-title" style="text-align:center">Skapa användare</h4>
+				<button type="button" class="close" data-dismiss="modal" style="margin-top:-20px;">&times;</button>
+			</div>
+			<!-- Modal body -->
+			<div class="modal-body">
+				<form #userForm="ngForm" (ngSubmit)="createUser(userForm)">
+					<div class="form-group" style="margin-left:20px;">
+						<label for="Name">Förnamn: </label>
+						<h5><span class="glyphicon glyphicon-question-sign" style="float:right; color:lightblue;" title="Minst 3 bokstäver"></span></h5>
+						<input style="width:250px;" required type="text" name="Name" id="Name" class="form-control" placeholder="Förnamn..."
+							   [(ngModel)]="Name" pattern="[a-zA-z][a-zA-Z]+" ngModel #name="ngModel" />
+						<div *ngIf="name.touched">
+							<div *ngIf="name.errors?.required">
+								Förnamn är obligatoriskt
+							</div>
+							<div *ngIf="name.errors?.pattern">
+								Du kan bara ha ett förnamn
+							</div>
+						</div>
+					</div>
+					<div class="form-group" style="margin-left:20px;">
+						<label for="LastName">Efternamn: </label>
+						<h5><span class="glyphicon glyphicon-question-sign" style="float:right; color:lightblue;" title="Minst 2 bokstäver"></span></h5>
+						<input style="width:250px;" required type="text" name="LastName" id="LastName" class="form-control" placeholder="Efternamn..."
+							   [(ngModel)]="LastName" pattern="[a-zA-z][a-zA-Z]+" ngModel #lastUser="ngModel" />
+						<div *ngIf="lastUser.touched">
+							<div *ngIf="lastUser.errors?.required">
+								Efternamn är obligatoriskt
+							</div>
+							<div *ngIf="lastUser.errors?.pattern">
+								Du kan bara ha ett efternamn
+							</div>
+						</div>
+					</div>
+					<div class="form-group" style="margin-left:20px;">
+						<label for="Email">Emailadress: </label>
+						<h5><span class="glyphicon glyphicon-question-sign" style="float:right; color:lightblue;" title="Emailadress@Domän.se"></span></h5>
+						<input style="width:250px;" minlength="5" required type="email" name="Email" id="PEmail" class="form-control" placeholder="Email..."
+							   [(ngModel)]="Email" ngModel #emailAs="ngModel" />
+						<div *ngIf="emailAs.touched">
+							<div *ngIf="emailAs.errors?.required">
+								Emailadressen är obligatoriskt
+							</div>
+						</div>
+					</div>
+					<div class="form-group" style="margin-left:20px;">
+						<label for="Phone">Telefonnummer: </label>
+						<h5><span class="glyphicon glyphicon-question-sign" style="float:right; color:lightblue;" title="Minst sju siffror"></span></h5>
+						<input style="width:250px;" required type="text" name="Phone" id="Phone" class="form-control" placeholder="Telefonnummer..."
+							   [(ngModel)]="Phone" pattern="[0-9]*" ngModel #phones="ngModel" />
+						<div *ngIf="phones.touched">
+							<div *ngIf="phones.errors?.required">
+								Telefonnummer är obligatoriskt
+							</div>
+							<div *ngIf="phones.errors?.pattern">
+								Pröva ta bort bindestreck och/eller mellanslag
+							</div>
+						</div>
+					</div>
+					<div class="form-group" style="margin-left:20px;">
+						<label for="Address">Adress: </label>
+						<h5><span class="glyphicon glyphicon-question-sign" style="float:right; color:lightblue;" title="Adressen för leveransen"></span></h5>
+						<input style="width:250px;" required type="text" name="Address" id="Address" class="form-control" placeholder="Tex: Högvägen 13, Tyresö"
+							   [(ngModel)]="Address" ngModel #Addresses="ngModel" />
+						<div *ngIf="Addresses.touched">
+							<div *ngIf="Addresses.errors?.required">
+								Adressen är obligatoriskt
+							</div>
+
+						</div>
+					</div>
+					<div class="form-group" style="margin-left:20px;">
+						<label for="Password">Lösenord: </label>
+						<h5><span class="glyphicon glyphicon-question-sign" style="float:right; color:lightblue;" title="Måste innehålla minst två siffror och åtta tecken"></span></h5>
+						<input style="width:250px;" required type="password" name="Password" id="Password" class="form-control" placeholder="Lösenord..."
+							   [(ngModel)]="Password" Pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" ngModel #pass="ngModel" />
+						<div *ngIf="pass.touched">
+							<div *ngIf="pass.errors?.required">
+								Lösenord är obligatoriskt
+							</div>
+							<div *ngIf="pass.errors?.pattern">
+								Lösenordet måste ha minst åtta tecken och två siffror
+							</div>
+						</div>
+					</div>
+
+					<button class="btn btn-primary" style="margin-left:100px;" [disabled]="userForm.invalid">Skapa</button>
+				</form>
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer" style="background-color:gold;">
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+	<div class="modal-dialog">
+		<div class="modal-content" style="border-color:gold; width:350px; max-height:600px; overflow-y:auto; overflow-x:hidden ">
+			<!-- Modal Header -->
+			<div class="modal-header" style="background-color:gold">
+				<h4 class="modal-title" style="text-align:center">Order information!</h4>
+				<button type="button" class="close" data-dismiss="modal" style="margin-top:-20px;">&times;</button>
+			</div>
+			<!-- Modal body -->
+			<div class="modal-body">
+				<div class="form-group" style="margin-left:20px;">
+					<label>Kund: </label>
+					{{getValueOfClient.firstName}} {{getValueOfClient.lastName}}
+
+					<br />
+					<label>Adress: </label>
+					{{getValueOfClient.address}}
+				</div>
+				<br />
+				<div class="form-group" style="margin-left:5px;">
+					<ul>
+						<li *ngFor="let values of orderInfo">
+							<div *ngIf="values.categoryId == 7 || values.categoryId == 11">
+								<h4 *ngIf="values.categoryId == 7">
+									Vanlig: {{values.name}} {{values.amountPerId}}
+								</h4>
+								<h4 *ngIf="values.categoryId == 11">
+									Familj: {{values.name}} {{values.amountPerId}}
+								</h4>
+							</div>
+
+							<div *ngIf="values.categoryId == 8 || values.categoryId == 12">
+								<h4 *ngIf="values.categoryId == 8">
+									Glutenfri vanlig: {{values.name}} {{values.AmountPerId}}
+								</h4>
+								<h4 *ngIf="values.categoryId == 12">
+									Glutenfri familj: {{values.name}} {{values.amountPerId}}
+								</h4>
+							</div>
+							<div>
+								<h4 *ngIf="values.categoryId != 7 || values.categoryId != 11 || values.categoryId != 8 || values.categoryId != 12">
+									{{values.name}} {{values.amountPerId}}
+								</h4>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<br />
+				<h4 *ngIf="notNull == 0" style="margin-left:50px; font-style:italic">Markera som levererad: <span class="glyphicon glyphicon-ok" style="color:green;" (click)="delivered()"></span></h4> <!--type="submit" för att spara info-->
+			</div>
+			<!-- Modal footer -->
+			<div class="modal-footer" style="background-color:gold;">
+			</div>
+		</div>
+	</div>
+</div>
+
+<style>
+	ul, li {
+		list-style: none;
+	}
+</style>
